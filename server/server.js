@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 // POST http method to create a resource
 app.post('/todos', (req, res) => {
   //console.log(req.body);
-
   var todo = new Todo({
     text: req.body.text
   });
@@ -22,7 +21,17 @@ app.post('/todos', (req, res) => {
   }, (err) => {
     res.status(400).send(err);
   });
+});
 
+// GET http method to fetch all resources
+app.get('/todos', (req, res) => {
+  Todo.find().then((todos) => {
+    res.send({
+      todos
+    });
+  }, (err) => {
+    res.status(400).send(err);
+  })
 });
 
 app.listen(3000, () => {
